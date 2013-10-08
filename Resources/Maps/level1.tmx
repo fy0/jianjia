@@ -3,10 +3,7 @@
  <tileset firstgid="1" name="bg" tilewidth="76" tileheight="76">
   <image source="level1/bg.png" width="1292" height="760"/>
  </tileset>
- <tileset firstgid="171" name="cloud" tilewidth="76" tileheight="76">
-  <image source="level1/cloud.png" width="1300" height="760"/>
- </tileset>
- <tileset firstgid="341" name="front" tilewidth="76" tileheight="76">
+ <tileset firstgid="171" name="front" tilewidth="76" tileheight="76">
   <image source="level1/front.png" width="1292" height="760"/>
  </tileset>
  <layer name="块层 1" width="17" height="10">
@@ -16,7 +13,7 @@
  </layer>
  <layer name="块层 3" width="17" height="10">
   <data encoding="base64" compression="zlib">
-   eJwNw4c2EAAAAEA+kqwWoSUyKklb0lTZUVERGsiIkLaMSCEl0h5KREL1unvvggIDAoJdZoihhhluhMtd4UpXudpIo1xjtDHGutZ1rneDG41zk/EmuNlEk0w2xS1udZupbjfNHaa7013udo973ed+MzxgpgfN8pCHPeJRj3ncbE940lPmmGue+RZYaJGnLbbEM571nKWWed4LXrTcCi9ZaZXVXvaKV71mjbXWed16G2y0yRs22+JNW22z3Vt2eNs73vWe933gQzt9ZJfd9tjrY/vs94kDPvWZgw457HNHfOFLR33lmOO+dsI3vvWd7/3gRz/52S9+ddJvfnfKH047409nnfOX8/52wUWX/ONf//kfTpxxOg==
+   eJwNwwdXDgAAAMAvlQgVCWU0UMmuRAtthcr4lypSKbTITihNpGRTIpFKdO/dXQoEAjXWWudlr1jvVRtstMlrNtvidW9401bbbLfDTm952y7veNd73veBD31kt4/t8YlPfWavfT633wEHHXLYEV/40leO+toxx33jhG9953s/+NFPfvaLX510ym9O+90fzvjTWX/52zn/OO+Ci/51yX/+NxCEKww2xFBXGuYqVxvuGte6zggjjXK9G4x2ozFucrNbjDXOrW5zuzuMN8FEk9zpLnebbIqp7jHNve5zvwc86CEPm26GmR4xy6MeM9scc80z3+Oe8KQFFlpksSWWWuYpy63wtGc8a6VVVnvO817wosvVZ1UB
   </data>
  </layer>
  <objectgroup name="dx_1" width="17" height="10">

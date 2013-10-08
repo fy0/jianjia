@@ -3,7 +3,6 @@
 
 import locale
 
-import stackless
 from lib import flux
 from utils import config
 from utils.suger import *

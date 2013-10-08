@@ -2,13 +2,15 @@
 # coding:utf-8
 
 from lib import flux
-from utils.phy import PhyIndex
+from utils import phy
+from utils.phy import PhyIndex, PhyGroup
 
-class Person(flux.PlatformerCharacter):
+class Person(flux.View):
     ''' 这个类姑且定义为：可操作的单位 '''
 
     body = None
     speed = 8.0
+    isGround = False
     isJumping = 0
     steering_wheel = 0
 
@@ -17,16 +19,33 @@ class Person(flux.PlatformerCharacter):
         self.scr = scr
         self.phy = scr.phy
 
-        self.SetSize(6.5/2, 9.1/2)
+        #self.SetSize(6.5/2, 9.1/2)
+        self.SetSize(7, 7)
         #self.SetSize(4.4, 5.28)
         #self.SetSize(6.6, 7.92)
 
-        self.SetSprite('Resources/Images/meizi.png', 3)
-        #self.AddFrameAnim('left', 0,4)
+        #self.SetSprite('Resources/Images/meizi.png', 3)
+        self.SetSprite('Resources/Images/out.png', 12)
+        self.AddFrameAnim('move', 1,10)
         #self.AddFrameAnim('right', 27, 22)
         #self.AddFrameAnim('jumpl', 5, 8)
         #self.AddFrameAnim('jumpr', 22, 19)
         self.SetFrame(0)
+
+        offset = phy.cpv(0,-1)
+        #moment = phy.cpMomentForCircle(1.0, 2, 2, offset)
+        #body = phy.cpBodyNew(1.0, moment)
+        body = phy.cpBodyNew(1.0, phy.INFINITY)
+        phydata = flux.PhyData(PhyIndex.CHARACTER, self)
+
+        shape = phy.cpCircleShapeNew(body, 1.5, offset)
+        phy.cpShapeSetUserData(shape, phydata)
+
+        self.body = body
+        self.body.phydata = phydata
+
+        self.phy.LinkView(self,  body)
+        self.phy.AddSyncShape(shape)
 
         fly = flux.View()
         fly.SetAnchor(self)
@@ -35,27 +54,8 @@ class Person(flux.PlatformerCharacter):
         self.fly = fly
         self.scr.AddView(fly)
 
-
-        a = flux.View()
-        a.SetAnchor(self)
-        a.SetSize(10, 7)
-        #a.SetPosition(0, 0.5)
-        a.SetColor(0, 0, 1, 0.2)
-        self.scr.AddView(a)
-
-        b = flux.View()
-        b.SetAnchor(self)
-        #b.SetPosition(0, -0.5)
-        b.SetColor(1, 0, 0, 0.3)
-        b.SetSize(10.1, 7.1)
-        self.scr.AddView(b, 1)
-
-        c = flux.View()
-        c.SetAnchor(self)
-        c.SetSize(6.5/2, 9.1/2)
-        c.SetColor(0,1,0,0.6)
-        self.scr.AddView(c)
-
+    def SetPosition(self, x, y):
+        self.phy.SetPos(self, x, y)
 
     def GetBody(self):
         if not self.body:
@@ -68,33 +68,45 @@ class Person(flux.PlatformerCharacter):
                 self.GetBody().v.y = 0
             self.GetBody().v.y += 10
             self.isJumping += 1
-            self.SetFrame(1)
+            self.AnimCancel()
+            self.SetFrame(11)
 
     def ResetXSpeed(self):
-        if not self.isJumping:
-            self.SetFrame(0)
+        print self.isJumping, self.isGround
+        if not self.isJumping and self.isGround:
+            if self.steering_wheel == 0:
+                self.AnimCancel()
+                self.SetFrame(0)
+            else:
+                self.AnimCancel()
+                self.PlayFrame(1, 'move').Loop()
+            
         if self.steering_wheel > 0:
             self.SetFlip(1)
             self.fly.AnimCancel()
-            self.fly.MoveTo(0.3, -2.5, 2.0).AnimDo()
-            #self.fly.SetPosition(-2.5, 2.0)
+            self.fly.MoveTo(0.3, -2.5, 2.0).Loop()
         elif self.steering_wheel < 0:
             self.SetFlip(0)
             self.fly.AnimCancel()
             self.fly.MoveTo(0.3, 2.5, 2.0).AnimDo()
-            #self.fly.SetPosition(2.5, 2.0)
         self.GetBody().v.x = self.speed * self.steering_wheel
 
     def CollisionBegin(self, data1, data2):
-        self.ResetXSpeed()
-        if self.GetID() == data1.v.GetID() and not ( data2 and (1 <= data2.index <= 4)):
+        if self.GetID() == data1.v.GetID() and not (data2 and (1 <= data2.index <= 4)):
             self.isJumping = 0
+            self.isGround = True
             self.SetFrame(0)
+        self.ResetXSpeed()
 
     def CollisionEnd(self, data1, data2):
+        if self.GetID() == data1.v.GetID() and not (data2 and (1 <= data2.index <= 4)):
+            self.isGround = False
+            self.AnimCancel()
+            self.SetFrame(11)
         self.ResetXSpeed()
 
     def KeyInput(self, key, scancode, action, mods):
+        
         if action == flux.GLFW_PRESS:
             if key == flux.GLFW_KEY_RIGHT:
                 self.steering_wheel += 1

@@ -40,6 +40,20 @@ class ScreenStartCallback(PyScreenCallback):
         bottombar.SetPosition(0, -3.5)
         bottombar.SetData(['Resources/Images/start/start.png', 'Resources/Images/start/about.png', 'Resources/Images/start/quit.png'])
 
+        test = flux.ParticleView()
+        test.SetColor(1,0,0)
+        test.SetSize(0.2, 0.2)
+        test.SetMaxParticles(500)
+        test.SetParticlesPerSecond(50)
+        test.SetParticleLifetime(1.5)
+        test.SetSpread(3.141592653589)
+        test.SetEndColor(flux.Color(1,0,0,0))
+        test.SetEndScale(1)
+        test.SetMinSpeed(3.0)
+        test.SetMaxSpeed(4.0)
+        test.SetPosition(3, 5)
+
+
         def icon_OnMove(select_index):
             theSound.PlaySound(101)
             bottombar.SetSelect(select_index)
@@ -60,6 +74,7 @@ class ScreenStartCallback(PyScreenCallback):
         self.scr.AddView(bg)
         self.scr.AddView(txt)
         self.scr.AddView(icon)
+        self.scr.AddView(test, 5)
 
         self.scr.RegKey(flux.GLFW_KEY_ESCAPE)
         self.scr.RegKey(flux.GLFW_KEY_LEFT)

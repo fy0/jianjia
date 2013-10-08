@@ -8,8 +8,8 @@ class ScreenGameCallback(PyScreenCallback):
 
     def OnInit(self):
         person = Person(self.scr)
-
-        self.scr.phy.AddPlatformerCharacter(person)
+        person.SetPosition(-10, 3)
+        #self.scr.phy.SetPos(person, 0, 3)
         self.scr.AddView(person)
 
         self.scr.RegKey(flux.GLFW_KEY_ESCAPE)
@@ -57,7 +57,7 @@ class ScreenGame(Screen):
 
         # tmx 地图
         self.map = flux.TmxMap()
-        self.map.SetBlockSize(2.5)
+        self.map.SetBlockSize(2.56)
         self.SetTmxmap(self.map)
 
         # 物理及其回调

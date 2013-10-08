@@ -15,8 +15,23 @@ var
 sdist
 develop-eggs
 .installed.cfg
-lib
 lib64
+
+Bin.rar
+Bin.zip
+DevIL.dll
+fmodex.dll
+glew32.dll
+ILU.dll
+ILUT.dll
+python27.dll
+python27.zip
+game.exe
+main.zip
+
+html
+*.sublime-project
+*.sublime-workspace
 
 # Installer logs
 pip-log.txt
