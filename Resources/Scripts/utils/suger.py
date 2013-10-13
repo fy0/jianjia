@@ -93,3 +93,13 @@ class Screen(flux.Screen):
 
     def __setitem__(self, key, value):
         self.sm[key] = value
+
+
+class ChipmunkWorld(flux.ChipmunkWorld):
+    def GetcpArbiterList(self, body):
+        while True:
+            ret = super(ChipmunkWorld, self).GetcpArbiterList(body)
+            if ret: yield ret
+            else: break
+
+flux.ChipmunkWorld = ChipmunkWorld

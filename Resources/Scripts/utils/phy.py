@@ -14,3 +14,8 @@ class PhyIndex(object):
 class PhyGroup(object):
     OBJECT        = 1
     PLAYER        = 2
+
+cpvzero = cpv(0.0, 0.0)
+
+def cpvneg(v):
+    return cpv(-v.x, -v.y)

@@ -203,10 +203,9 @@ class PyChipmunkCallback(PyCallback):
     for _s in [PyCallback]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, PyChipmunkCallback, name)
     __repr__ = _swig_repr
-    __swig_destroy__ = _flux.delete_PyChipmunkCallback
-    __del__ = lambda self : None;
-    def CollisionBegin(self, *args): return _flux.PyChipmunkCallback_CollisionBegin(self, *args)
-    def CollisionEnd(self, *args): return _flux.PyChipmunkCallback_CollisionEnd(self, *args)
+    __swig_setmethods__["enable_update_vel"] = _flux.PyChipmunkCallback_enable_update_vel_set
+    __swig_getmethods__["enable_update_vel"] = _flux.PyChipmunkCallback_enable_update_vel_get
+    if _newclass:enable_update_vel = _swig_property(_flux.PyChipmunkCallback_enable_update_vel_get, _flux.PyChipmunkCallback_enable_update_vel_set)
     def __init__(self): 
         if self.__class__ == PyChipmunkCallback:
             _self = None
@@ -215,6 +214,11 @@ class PyChipmunkCallback(PyCallback):
         this = _flux.new_PyChipmunkCallback(_self, )
         try: self.this.append(this)
         except: self.this = this
+    __swig_destroy__ = _flux.delete_PyChipmunkCallback
+    __del__ = lambda self : None;
+    def CollisionBegin(self, *args): return _flux.PyChipmunkCallback_CollisionBegin(self, *args)
+    def CollisionEnd(self, *args): return _flux.PyChipmunkCallback_CollisionEnd(self, *args)
+    def UpdateVelocity(self, *args): return _flux.PyChipmunkCallback_UpdateVelocity(self, *args)
     def __disown__(self):
         self.this.disown()
         _flux.disown_PyChipmunkCallback(self)
@@ -243,6 +247,7 @@ class World(_object):
     def WorldToPx(self, *args): return _flux.World_WorldToPx(self, *args)
     def PxToWorld(self, *args): return _flux.World_PxToWorld(self, *args)
     def SetPxSize(self, *args): return _flux.World_SetPxSize(self, *args)
+    def GetBlock(self): return _flux.World_GetBlock(self)
     def GetPxSize(self): return _flux.World_GetPxSize(self)
     def GetSize(self): return _flux.World_GetSize(self)
     def SetTitle(self, *args): return _flux.World_SetTitle(self, *args)
@@ -250,10 +255,14 @@ class World(_object):
     def DelayRun(self, *args): return _flux.World_DelayRun(self, *args)
     def SetPhy(self, *args): return _flux.World_SetPhy(self, *args)
     def SetAmbient(self, *args): return _flux.World_SetAmbient(self, *args)
+    def InitGUI(self, *args): return _flux.World_InitGUI(self, *args)
+    def GetGUI(self): return _flux.World_GetGUI(self)
     __swig_getmethods__["GetInstance"] = lambda x: _flux.World_GetInstance
     if _newclass:GetInstance = staticmethod(_flux.World_GetInstance)
     def SetSleep(self, *args): return _flux.World_SetSleep(self, *args)
     def SetPyCallBack(self, *args): return _flux.World_SetPyCallBack(self, *args)
+    def GetWindowWidth(self): return _flux.World_GetWindowWidth(self)
+    def GetWindowHeight(self): return _flux.World_GetWindowHeight(self)
     def __init__(self): 
         this = _flux.new_World()
         try: self.this.append(this)
@@ -489,38 +498,95 @@ class ParticleView(View):
 ParticleView_swigregister = _flux.ParticleView_swigregister
 ParticleView_swigregister(ParticleView)
 
-class Color(_object):
+class Vec2i(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, Color, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Vec2i, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, Color, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, Vec2i, name)
     __repr__ = _swig_repr
-    __swig_setmethods__["R"] = _flux.Color_R_set
-    __swig_getmethods__["R"] = _flux.Color_R_get
-    if _newclass:R = _swig_property(_flux.Color_R_get, _flux.Color_R_set)
-    __swig_setmethods__["G"] = _flux.Color_G_set
-    __swig_getmethods__["G"] = _flux.Color_G_get
-    if _newclass:G = _swig_property(_flux.Color_G_get, _flux.Color_G_set)
-    __swig_setmethods__["B"] = _flux.Color_B_set
-    __swig_getmethods__["B"] = _flux.Color_B_get
-    if _newclass:B = _swig_property(_flux.Color_B_get, _flux.Color_B_set)
-    __swig_setmethods__["A"] = _flux.Color_A_set
-    __swig_getmethods__["A"] = _flux.Color_A_get
-    if _newclass:A = _swig_property(_flux.Color_A_get, _flux.Color_A_set)
+    __swig_setmethods__["x"] = _flux.Vec2i_x_set
+    __swig_getmethods__["x"] = _flux.Vec2i_x_get
+    if _newclass:x = _swig_property(_flux.Vec2i_x_get, _flux.Vec2i_x_set)
+    __swig_setmethods__["y"] = _flux.Vec2i_y_set
+    __swig_getmethods__["y"] = _flux.Vec2i_y_get
+    if _newclass:y = _swig_property(_flux.Vec2i_y_get, _flux.Vec2i_y_set)
     def __init__(self, *args): 
-        this = _flux.new_Color(*args)
+        this = _flux.new_Vec2i(*args)
         try: self.this.append(this)
         except: self.this = this
-    def __eq__(self, *args): return _flux.Color___eq__(self, *args)
-    def __ne__(self, *args): return _flux.Color___ne__(self, *args)
-    def __sub__(self, *args): return _flux.Color___sub__(self, *args)
-    def __add__(self, *args): return _flux.Color___add__(self, *args)
-    def __div__(self, *args): return _flux.Color___div__(self, *args)
-    def __mul__(self, *args): return _flux.Color___mul__(self, *args)
-    __swig_destroy__ = _flux.delete_Color
+    __swig_destroy__ = _flux.delete_Vec2i
     __del__ = lambda self : None;
-Color_swigregister = _flux.Color_swigregister
-Color_swigregister(Color)
+Vec2i_swigregister = _flux.Vec2i_swigregister
+Vec2i_swigregister(Vec2i)
+
+class Vec2ui(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Vec2ui, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Vec2ui, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["x"] = _flux.Vec2ui_x_set
+    __swig_getmethods__["x"] = _flux.Vec2ui_x_get
+    if _newclass:x = _swig_property(_flux.Vec2ui_x_get, _flux.Vec2ui_x_set)
+    __swig_setmethods__["y"] = _flux.Vec2ui_y_set
+    __swig_getmethods__["y"] = _flux.Vec2ui_y_get
+    if _newclass:y = _swig_property(_flux.Vec2ui_y_get, _flux.Vec2ui_y_set)
+    def __init__(self, *args): 
+        this = _flux.new_Vec2ui(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _flux.delete_Vec2ui
+    __del__ = lambda self : None;
+Vec2ui_swigregister = _flux.Vec2ui_swigregister
+Vec2ui_swigregister(Vec2ui)
+
+class Vec3i(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Vec3i, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Vec3i, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["x"] = _flux.Vec3i_x_set
+    __swig_getmethods__["x"] = _flux.Vec3i_x_get
+    if _newclass:x = _swig_property(_flux.Vec3i_x_get, _flux.Vec3i_x_set)
+    __swig_setmethods__["y"] = _flux.Vec3i_y_set
+    __swig_getmethods__["y"] = _flux.Vec3i_y_get
+    if _newclass:y = _swig_property(_flux.Vec3i_y_get, _flux.Vec3i_y_set)
+    __swig_setmethods__["Z"] = _flux.Vec3i_Z_set
+    __swig_getmethods__["Z"] = _flux.Vec3i_Z_get
+    if _newclass:Z = _swig_property(_flux.Vec3i_Z_get, _flux.Vec3i_Z_set)
+    def __init__(self, *args): 
+        this = _flux.new_Vec3i(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _flux.delete_Vec3i
+    __del__ = lambda self : None;
+Vec3i_swigregister = _flux.Vec3i_swigregister
+Vec3i_swigregister(Vec3i)
+
+class Vec3ui(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Vec3ui, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Vec3ui, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["x"] = _flux.Vec3ui_x_set
+    __swig_getmethods__["x"] = _flux.Vec3ui_x_get
+    if _newclass:x = _swig_property(_flux.Vec3ui_x_get, _flux.Vec3ui_x_set)
+    __swig_setmethods__["y"] = _flux.Vec3ui_y_set
+    __swig_getmethods__["y"] = _flux.Vec3ui_y_get
+    if _newclass:y = _swig_property(_flux.Vec3ui_y_get, _flux.Vec3ui_y_set)
+    __swig_setmethods__["Z"] = _flux.Vec3ui_Z_set
+    __swig_getmethods__["Z"] = _flux.Vec3ui_Z_get
+    if _newclass:Z = _swig_property(_flux.Vec3ui_Z_get, _flux.Vec3ui_Z_set)
+    def __init__(self, *args): 
+        this = _flux.new_Vec3ui(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _flux.delete_Vec3ui
+    __del__ = lambda self : None;
+Vec3ui_swigregister = _flux.Vec3ui_swigregister
+Vec3ui_swigregister(Vec3ui)
 
 class Vector2(_object):
     __swig_setmethods__ = {}
@@ -572,6 +638,39 @@ class Vector3(_object):
     __del__ = lambda self : None;
 Vector3_swigregister = _flux.Vector3_swigregister
 Vector3_swigregister(Vector3)
+
+class Color(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Color, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Color, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["R"] = _flux.Color_R_set
+    __swig_getmethods__["R"] = _flux.Color_R_get
+    if _newclass:R = _swig_property(_flux.Color_R_get, _flux.Color_R_set)
+    __swig_setmethods__["G"] = _flux.Color_G_set
+    __swig_getmethods__["G"] = _flux.Color_G_get
+    if _newclass:G = _swig_property(_flux.Color_G_get, _flux.Color_G_set)
+    __swig_setmethods__["B"] = _flux.Color_B_set
+    __swig_getmethods__["B"] = _flux.Color_B_get
+    if _newclass:B = _swig_property(_flux.Color_B_get, _flux.Color_B_set)
+    __swig_setmethods__["A"] = _flux.Color_A_set
+    __swig_getmethods__["A"] = _flux.Color_A_get
+    if _newclass:A = _swig_property(_flux.Color_A_get, _flux.Color_A_set)
+    def __init__(self, *args): 
+        this = _flux.new_Color(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def __eq__(self, *args): return _flux.Color___eq__(self, *args)
+    def __ne__(self, *args): return _flux.Color___ne__(self, *args)
+    def __sub__(self, *args): return _flux.Color___sub__(self, *args)
+    def __add__(self, *args): return _flux.Color___add__(self, *args)
+    def __div__(self, *args): return _flux.Color___div__(self, *args)
+    def __mul__(self, *args): return _flux.Color___mul__(self, *args)
+    __swig_destroy__ = _flux.delete_Color
+    __del__ = lambda self : None;
+Color_swigregister = _flux.Color_swigregister
+Color_swigregister(Color)
 
 TD_NONE = _flux.TD_NONE
 TD_LEFT = _flux.TD_LEFT
@@ -925,11 +1024,34 @@ class ChipmunkWorld(BasePhysics):
     def SetScreen(self, *args): return _flux.ChipmunkWorld_SetScreen(self, *args)
     def GetBody(self, *args): return _flux.ChipmunkWorld_GetBody(self, *args)
     def GetSpace(self): return _flux.ChipmunkWorld_GetSpace(self)
+    def GetShapeList(self, *args): return _flux.ChipmunkWorld_GetShapeList(self, *args)
+    def GetcpArbiterList(self, *args): return _flux.ChipmunkWorld_GetcpArbiterList(self, *args)
     def Pause(self): return _flux.ChipmunkWorld_Pause(self)
     def Continue(self): return _flux.ChipmunkWorld_Continue(self)
     def SetPyCallBack(self, *args): return _flux.ChipmunkWorld_SetPyCallBack(self, *args)
 ChipmunkWorld_swigregister = _flux.ChipmunkWorld_swigregister
 ChipmunkWorld_swigregister(ChipmunkWorld)
+
+
+def CastToPhyData(*args):
+  return _flux.CastToPhyData(*args)
+CastToPhyData = _flux.CastToPhyData
+class GwenUI(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, GwenUI, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, GwenUI, name)
+    __repr__ = _swig_repr
+    def Render(self): return _flux.GwenUI_Render(self)
+    def __init__(self, *args): 
+        this = _flux.new_GwenUI(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def AddButton(self, *args): return _flux.GwenUI_AddButton(self, *args)
+    __swig_destroy__ = _flux.delete_GwenUI
+    __del__ = lambda self : None;
+GwenUI_swigregister = _flux.GwenUI_swigregister
+GwenUI_swigregister(GwenUI)
 
 # This file is compatible with both classic and new-style classes.
 

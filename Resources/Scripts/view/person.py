@@ -10,7 +10,6 @@ class Person(flux.View):
 
     body = None
     speed = 8.0
-    isGround = False
     isJumping = 0
     steering_wheel = 0
 
@@ -25,8 +24,8 @@ class Person(flux.View):
         #self.SetSize(6.6, 7.92)
 
         #self.SetSprite('Resources/Images/meizi.png', 3)
-        self.SetSprite('Resources/Images/out.png', 12)
-        self.AddFrameAnim('move', 1,10)
+        self.SetSprite('Resources/Images/out.png', 4)
+        self.AddFrameAnim('move', 1,1)
         #self.AddFrameAnim('right', 27, 22)
         #self.AddFrameAnim('jumpl', 5, 8)
         #self.AddFrameAnim('jumpr', 22, 19)
@@ -54,6 +53,11 @@ class Person(flux.View):
         self.fly = fly
         self.scr.AddView(fly)
 
+    def IsOnGround(self):
+        for arb in self.phy.GetcpArbiterList(self.body):
+            if arb.b_private.data is None:
+                return True
+
     def SetPosition(self, x, y):
         self.phy.SetPos(self, x, y)
 
@@ -69,11 +73,9 @@ class Person(flux.View):
             self.GetBody().v.y += 10
             self.isJumping += 1
             self.AnimCancel()
-            self.SetFrame(11)
 
     def ResetXSpeed(self):
-        print self.isJumping, self.isGround
-        if not self.isJumping and self.isGround:
+        if not self.isJumping and self.IsOnGround():
             if self.steering_wheel == 0:
                 self.AnimCancel()
                 self.SetFrame(0)
@@ -94,15 +96,13 @@ class Person(flux.View):
     def CollisionBegin(self, data1, data2):
         if self.GetID() == data1.v.GetID() and not (data2 and (1 <= data2.index <= 4)):
             self.isJumping = 0
-            self.isGround = True
             self.SetFrame(0)
         self.ResetXSpeed()
 
     def CollisionEnd(self, data1, data2):
         if self.GetID() == data1.v.GetID() and not (data2 and (1 <= data2.index <= 4)):
-            self.isGround = False
             self.AnimCancel()
-            self.SetFrame(11)
+            self.SetFrame(2)
         self.ResetXSpeed()
 
     def KeyInput(self, key, scancode, action, mods):

@@ -254,6 +254,191 @@ class cpBody(_object):
 cpBody_swigregister = _phy.cpBody_swigregister
 cpBody_swigregister(cpBody)
 
+class cpCollisionHandler(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, cpCollisionHandler, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, cpCollisionHandler, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["a"] = _phy.cpCollisionHandler_a_set
+    __swig_getmethods__["a"] = _phy.cpCollisionHandler_a_get
+    if _newclass:a = _swig_property(_phy.cpCollisionHandler_a_get, _phy.cpCollisionHandler_a_set)
+    __swig_setmethods__["b"] = _phy.cpCollisionHandler_b_set
+    __swig_getmethods__["b"] = _phy.cpCollisionHandler_b_get
+    if _newclass:b = _swig_property(_phy.cpCollisionHandler_b_get, _phy.cpCollisionHandler_b_set)
+    __swig_setmethods__["begin"] = _phy.cpCollisionHandler_begin_set
+    __swig_getmethods__["begin"] = _phy.cpCollisionHandler_begin_get
+    if _newclass:begin = _swig_property(_phy.cpCollisionHandler_begin_get, _phy.cpCollisionHandler_begin_set)
+    __swig_setmethods__["preSolve"] = _phy.cpCollisionHandler_preSolve_set
+    __swig_getmethods__["preSolve"] = _phy.cpCollisionHandler_preSolve_get
+    if _newclass:preSolve = _swig_property(_phy.cpCollisionHandler_preSolve_get, _phy.cpCollisionHandler_preSolve_set)
+    __swig_setmethods__["postSolve"] = _phy.cpCollisionHandler_postSolve_set
+    __swig_getmethods__["postSolve"] = _phy.cpCollisionHandler_postSolve_get
+    if _newclass:postSolve = _swig_property(_phy.cpCollisionHandler_postSolve_get, _phy.cpCollisionHandler_postSolve_set)
+    __swig_setmethods__["separate"] = _phy.cpCollisionHandler_separate_set
+    __swig_getmethods__["separate"] = _phy.cpCollisionHandler_separate_get
+    if _newclass:separate = _swig_property(_phy.cpCollisionHandler_separate_get, _phy.cpCollisionHandler_separate_set)
+    __swig_setmethods__["data"] = _phy.cpCollisionHandler_data_set
+    __swig_getmethods__["data"] = _phy.cpCollisionHandler_data_get
+    if _newclass:data = _swig_property(_phy.cpCollisionHandler_data_get, _phy.cpCollisionHandler_data_set)
+    def __init__(self): 
+        this = _phy.new_cpCollisionHandler()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _phy.delete_cpCollisionHandler
+    __del__ = lambda self : None;
+cpCollisionHandler_swigregister = _phy.cpCollisionHandler_swigregister
+cpCollisionHandler_swigregister(cpCollisionHandler)
+
+CP_MAX_CONTACTS_PER_ARBITER = _phy.CP_MAX_CONTACTS_PER_ARBITER
+cpArbiterStateFirstColl = _phy.cpArbiterStateFirstColl
+cpArbiterStateNormal = _phy.cpArbiterStateNormal
+cpArbiterStateIgnore = _phy.cpArbiterStateIgnore
+cpArbiterStateCached = _phy.cpArbiterStateCached
+class cpArbiterThread(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, cpArbiterThread, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, cpArbiterThread, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["next"] = _phy.cpArbiterThread_next_set
+    __swig_getmethods__["next"] = _phy.cpArbiterThread_next_get
+    if _newclass:next = _swig_property(_phy.cpArbiterThread_next_get, _phy.cpArbiterThread_next_set)
+    __swig_setmethods__["prev"] = _phy.cpArbiterThread_prev_set
+    __swig_getmethods__["prev"] = _phy.cpArbiterThread_prev_get
+    if _newclass:prev = _swig_property(_phy.cpArbiterThread_prev_get, _phy.cpArbiterThread_prev_set)
+    def __init__(self): 
+        this = _phy.new_cpArbiterThread()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _phy.delete_cpArbiterThread
+    __del__ = lambda self : None;
+cpArbiterThread_swigregister = _phy.cpArbiterThread_swigregister
+cpArbiterThread_swigregister(cpArbiterThread)
+
+class cpArbiter(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, cpArbiter, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, cpArbiter, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["e"] = _phy.cpArbiter_e_set
+    __swig_getmethods__["e"] = _phy.cpArbiter_e_get
+    if _newclass:e = _swig_property(_phy.cpArbiter_e_get, _phy.cpArbiter_e_set)
+    __swig_setmethods__["u"] = _phy.cpArbiter_u_set
+    __swig_getmethods__["u"] = _phy.cpArbiter_u_get
+    if _newclass:u = _swig_property(_phy.cpArbiter_u_get, _phy.cpArbiter_u_set)
+    __swig_setmethods__["surface_vr"] = _phy.cpArbiter_surface_vr_set
+    __swig_getmethods__["surface_vr"] = _phy.cpArbiter_surface_vr_get
+    if _newclass:surface_vr = _swig_property(_phy.cpArbiter_surface_vr_get, _phy.cpArbiter_surface_vr_set)
+    __swig_setmethods__["data"] = _phy.cpArbiter_data_set
+    __swig_getmethods__["data"] = _phy.cpArbiter_data_get
+    if _newclass:data = _swig_property(_phy.cpArbiter_data_get, _phy.cpArbiter_data_set)
+    __swig_setmethods__["a_private"] = _phy.cpArbiter_a_private_set
+    __swig_getmethods__["a_private"] = _phy.cpArbiter_a_private_get
+    if _newclass:a_private = _swig_property(_phy.cpArbiter_a_private_get, _phy.cpArbiter_a_private_set)
+    __swig_setmethods__["b_private"] = _phy.cpArbiter_b_private_set
+    __swig_getmethods__["b_private"] = _phy.cpArbiter_b_private_get
+    if _newclass:b_private = _swig_property(_phy.cpArbiter_b_private_get, _phy.cpArbiter_b_private_set)
+    __swig_setmethods__["body_a_private"] = _phy.cpArbiter_body_a_private_set
+    __swig_getmethods__["body_a_private"] = _phy.cpArbiter_body_a_private_get
+    if _newclass:body_a_private = _swig_property(_phy.cpArbiter_body_a_private_get, _phy.cpArbiter_body_a_private_set)
+    __swig_setmethods__["body_b_private"] = _phy.cpArbiter_body_b_private_set
+    __swig_getmethods__["body_b_private"] = _phy.cpArbiter_body_b_private_get
+    if _newclass:body_b_private = _swig_property(_phy.cpArbiter_body_b_private_get, _phy.cpArbiter_body_b_private_set)
+    def __init__(self): 
+        this = _phy.new_cpArbiter()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _phy.delete_cpArbiter
+    __del__ = lambda self : None;
+cpArbiter_swigregister = _phy.cpArbiter_swigregister
+cpArbiter_swigregister(cpArbiter)
+
+
+def cpArbiterGetElasticity(*args):
+  return _phy.cpArbiterGetElasticity(*args)
+cpArbiterGetElasticity = _phy.cpArbiterGetElasticity
+
+def cpArbiterSetElasticity(*args):
+  return _phy.cpArbiterSetElasticity(*args)
+cpArbiterSetElasticity = _phy.cpArbiterSetElasticity
+
+def cpArbiterGetFriction(*args):
+  return _phy.cpArbiterGetFriction(*args)
+cpArbiterGetFriction = _phy.cpArbiterGetFriction
+
+def cpArbiterSetFriction(*args):
+  return _phy.cpArbiterSetFriction(*args)
+cpArbiterSetFriction = _phy.cpArbiterSetFriction
+
+def cpArbiterGetSurfaceVelocity(*args):
+  return _phy.cpArbiterGetSurfaceVelocity(*args)
+cpArbiterGetSurfaceVelocity = _phy.cpArbiterGetSurfaceVelocity
+
+def cpArbiterSetSurfaceVelocity(*args):
+  return _phy.cpArbiterSetSurfaceVelocity(*args)
+cpArbiterSetSurfaceVelocity = _phy.cpArbiterSetSurfaceVelocity
+
+def cpArbiterGetUserData(*args):
+  return _phy.cpArbiterGetUserData(*args)
+cpArbiterGetUserData = _phy.cpArbiterGetUserData
+
+def cpArbiterSetUserData(*args):
+  return _phy.cpArbiterSetUserData(*args)
+cpArbiterSetUserData = _phy.cpArbiterSetUserData
+
+def cpArbiterTotalImpulse(*args):
+  return _phy.cpArbiterTotalImpulse(*args)
+cpArbiterTotalImpulse = _phy.cpArbiterTotalImpulse
+
+def cpArbiterTotalImpulseWithFriction(*args):
+  return _phy.cpArbiterTotalImpulseWithFriction(*args)
+cpArbiterTotalImpulseWithFriction = _phy.cpArbiterTotalImpulseWithFriction
+
+def cpArbiterTotalKE(*args):
+  return _phy.cpArbiterTotalKE(*args)
+cpArbiterTotalKE = _phy.cpArbiterTotalKE
+
+def cpArbiterIgnore(*args):
+  return _phy.cpArbiterIgnore(*args)
+cpArbiterIgnore = _phy.cpArbiterIgnore
+
+def cpArbiterGetShapes(*args):
+  return _phy.cpArbiterGetShapes(*args)
+cpArbiterGetShapes = _phy.cpArbiterGetShapes
+
+def cpArbiterGetBodies(*args):
+  return _phy.cpArbiterGetBodies(*args)
+cpArbiterGetBodies = _phy.cpArbiterGetBodies
+
+def cpArbiterGetContactPointSet(*args):
+  return _phy.cpArbiterGetContactPointSet(*args)
+cpArbiterGetContactPointSet = _phy.cpArbiterGetContactPointSet
+
+def cpArbiterSetContactPointSet(*args):
+  return _phy.cpArbiterSetContactPointSet(*args)
+cpArbiterSetContactPointSet = _phy.cpArbiterSetContactPointSet
+
+def cpArbiterIsFirstContact(*args):
+  return _phy.cpArbiterIsFirstContact(*args)
+cpArbiterIsFirstContact = _phy.cpArbiterIsFirstContact
+
+def cpArbiterGetCount(*args):
+  return _phy.cpArbiterGetCount(*args)
+cpArbiterGetCount = _phy.cpArbiterGetCount
+
+def cpArbiterGetNormal(*args):
+  return _phy.cpArbiterGetNormal(*args)
+cpArbiterGetNormal = _phy.cpArbiterGetNormal
+
+def cpArbiterGetPoint(*args):
+  return _phy.cpArbiterGetPoint(*args)
+cpArbiterGetPoint = _phy.cpArbiterGetPoint
+
+def cpArbiterGetDepth(*args):
+  return _phy.cpArbiterGetDepth(*args)
+cpArbiterGetDepth = _phy.cpArbiterGetDepth
 class cpNearestPointQueryInfo(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, cpNearestPointQueryInfo, name, value)
@@ -1006,6 +1191,14 @@ cpBodyLocal2World = _phy.cpBodyLocal2World
 def cpBodyWorld2Local(*args):
   return _phy.cpBodyWorld2Local(*args)
 cpBodyWorld2Local = _phy.cpBodyWorld2Local
+
+def cpBodyUpdateVelocity(*args):
+  return _phy.cpBodyUpdateVelocity(*args)
+cpBodyUpdateVelocity = _phy.cpBodyUpdateVelocity
+
+def cpBodyUpdatePosition(*args):
+  return _phy.cpBodyUpdatePosition(*args)
+cpBodyUpdatePosition = _phy.cpBodyUpdatePosition
 
 def cpBodyResetForces(*args):
   return _phy.cpBodyResetForces(*args)

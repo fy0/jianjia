@@ -1,6 +1,7 @@
 
 # coding:utf-8
 
+from utils import phy  
 from utils.suger import *
 from view.person import Person
 
@@ -47,6 +48,11 @@ class PhysicsCallback(PyChipmunkCallback):
         
     def CollisionEnd(self, data1, data2):
         self.scr['person'].CollisionEnd(data1, data2)
+
+    def UpdateVelocity(self, body, gravity, damping, dt):
+        # 打开 enable_update_vel 后才能使用
+        #phy.cpBodyUpdateVelocity(body, gravity, damping, dt)
+        pass
 
 
 class ScreenGame(Screen):
