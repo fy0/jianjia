@@ -102,4 +102,10 @@ class ChipmunkWorld(flux.ChipmunkWorld):
             if ret: yield ret
             else: break
 
+    def SegmentQuery(self, start, end, layers, group):
+        while True:
+            ret = super(ChipmunkWorld, self).SegmentQuery(start, end, layers, group)
+            if ret: yield ret
+            else: break
+
 flux.ChipmunkWorld = ChipmunkWorld

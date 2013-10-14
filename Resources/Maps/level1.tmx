@@ -180,7 +180,7 @@
    <tile gid="170"/>
   </data>
  </layer>
- <layer name="块层 3" width="17" height="10" visible="0">
+ <layer name="块层 3" width="17" height="10">
   <data>
    <tile gid="171"/>
    <tile gid="172"/>

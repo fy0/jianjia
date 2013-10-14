@@ -12,6 +12,7 @@ class Person(flux.View):
     speed = 8.0
     isJumping = 0
     steering_wheel = 0
+    _dir = 0
 
     def __init__(self, scr):
         super(Person, self).__init__()
@@ -54,6 +55,8 @@ class Person(flux.View):
         self.scr.AddView(fly)
 
     def IsOnGround(self):
+        if self.body.v.y == 0:
+            return True
         for arb in self.phy.GetcpArbiterList(self.body):
             if arb.b_private.data is None:
                 return True
@@ -74,6 +77,29 @@ class Person(flux.View):
             self.isJumping += 1
             self.AnimCancel()
 
+    test = []
+
+    def Attack(self):
+        pos = self.GetPosition()
+        print pos.x, pos.y
+        if self._dir == 0:
+            offset = -5
+        elif self._dir == 1:
+            offset = 5
+
+        v  = flux.View()
+        v.SetSize(abs(offset), 0.1)
+        v.SetPosition(pos.x + offset /2, pos.y)
+        v.SetColor(1,0,0)
+        v.FadeOut(0.5).AnimDo()
+        self.test.append(v)
+        self.scr.AddView(v)
+
+        lst = []
+        for i in self.phy.SegmentQuery(phy.cpv(pos.x, pos.y), phy.cpv(pos.x+offset, pos.y), 2, 0):
+            lst.append(i)
+        print lst
+
     def ResetXSpeed(self):
         if not self.isJumping and self.IsOnGround():
             if self.steering_wheel == 0:
@@ -82,13 +108,15 @@ class Person(flux.View):
             else:
                 self.AnimCancel()
                 self.PlayFrame(1, 'move').Loop()
-            
+
         if self.steering_wheel > 0:
-            self.SetFlip(1)
+            self._dir = 1
+            self.SetFlip(self._dir)
             self.fly.AnimCancel()
             self.fly.MoveTo(0.3, -2.5, 2.0).Loop()
         elif self.steering_wheel < 0:
-            self.SetFlip(0)
+            self._dir = 0
+            self.SetFlip(self._dir)
             self.fly.AnimCancel()
             self.fly.MoveTo(0.3, 2.5, 2.0).AnimDo()
         self.GetBody().v.x = self.speed * self.steering_wheel
@@ -117,8 +145,7 @@ class Person(flux.View):
             elif key == flux.GLFW_KEY_SPACE:
                 self.Jump()
             elif key == ord('Z'):
-                if not self.isJumping:
-                    self.SetFrame(2)
+                self.Attack()
         elif action == flux.GLFW_RELEASE:
             if key == flux.GLFW_KEY_RIGHT:
                 self.steering_wheel -= 1

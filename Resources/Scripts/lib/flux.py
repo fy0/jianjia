@@ -1026,6 +1026,8 @@ class ChipmunkWorld(BasePhysics):
     def GetSpace(self): return _flux.ChipmunkWorld_GetSpace(self)
     def GetShapeList(self, *args): return _flux.ChipmunkWorld_GetShapeList(self, *args)
     def GetcpArbiterList(self, *args): return _flux.ChipmunkWorld_GetcpArbiterList(self, *args)
+    def BBQuery(self, *args): return _flux.ChipmunkWorld_BBQuery(self, *args)
+    def SegmentQuery(self, *args): return _flux.ChipmunkWorld_SegmentQuery(self, *args)
     def Pause(self): return _flux.ChipmunkWorld_Pause(self)
     def Continue(self): return _flux.ChipmunkWorld_Continue(self)
     def SetPyCallBack(self, *args): return _flux.ChipmunkWorld_SetPyCallBack(self, *args)

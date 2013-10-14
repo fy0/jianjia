@@ -15,6 +15,9 @@ class PhyGroup(object):
     OBJECT        = 1
     PLAYER        = 2
 
+class PhyLayers(object):
+    ALL           = 4294967295
+
 cpvzero = cpv(0.0, 0.0)
 
 def cpvneg(v):
