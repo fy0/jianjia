@@ -15,14 +15,23 @@ theCamera = flux.Camera.GetInstance()
 theSound = theAudio = flux.Audio.GetInstance()
 
 sleep_channel = stackless.channel()
+sleep_index = -2147483648
 
 class PyWorldCallback(flux.PyWorldCallback):
-    def OnWake(self):
-        sleep_channel.send(None)
+    def OnWake(self, index):
+        sleep_channel.send(index)
 
 def sleep(_time):
-    theWorld.SetSleep(_time)
-    while sleep_channel.receive():
+    ''' 只能在协程中调用 '''
+    global sleep_index
+    index = sleep_index
+
+    sleep_index += 1
+    if sleep_index >= 2147483640:
+        sleep_index = -2147483648
+
+    theWorld.SetSleep(index, _time)
+    while sleep_channel.receive() == index:
         break
 
 class PyScreenCallback(flux.PyScreenCallback):
@@ -68,7 +77,9 @@ class Screen(flux.Screen):
         self.sm = SceneManager(self)
 
     def LoadScene(self, name, x=None, y=None):
-        super(Screen, self).LoadScene(name)
+        # 不建议使用这个机制
+        #super(Screen, self).LoadScene(name)
+        pass
 
     def AddView(self, item, layer=0, scenename=None):
         # 对 Widget 进行处理

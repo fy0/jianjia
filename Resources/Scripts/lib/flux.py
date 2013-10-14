@@ -148,7 +148,7 @@ class PyWorldCallback(PyCallback):
     __repr__ = _swig_repr
     __swig_destroy__ = _flux.delete_PyWorldCallback
     __del__ = lambda self : None;
-    def OnWake(self): return _flux.PyWorldCallback_OnWake(self)
+    def OnWake(self, *args): return _flux.PyWorldCallback_OnWake(self, *args)
     def __init__(self): 
         if self.__class__ == PyWorldCallback:
             _self = None
@@ -252,7 +252,6 @@ class World(_object):
     def GetSize(self): return _flux.World_GetSize(self)
     def SetTitle(self, *args): return _flux.World_SetTitle(self, *args)
     def GetTitle(self): return _flux.World_GetTitle(self)
-    def DelayRun(self, *args): return _flux.World_DelayRun(self, *args)
     def SetPhy(self, *args): return _flux.World_SetPhy(self, *args)
     def SetAmbient(self, *args): return _flux.World_SetAmbient(self, *args)
     def InitGUI(self, *args): return _flux.World_InitGUI(self, *args)
@@ -366,6 +365,7 @@ class View(_object):
     def GetLayer(self): return _flux.View_GetLayer(self)
     def SetDisableFlag(self, *args): return _flux.View_SetDisableFlag(self, *args)
     def SetFlip(self, *args): return _flux.View_SetFlip(self, *args)
+    def LockRemove(self, lock=True): return _flux.View_LockRemove(self, lock)
     def SetPaintMode(self, *args): return _flux.View_SetPaintMode(self, *args)
     def SetCutArea(self, *args): return _flux.View_SetCutArea(self, *args)
     def SetFrame(self, *args): return _flux.View_SetFrame(self, *args)
