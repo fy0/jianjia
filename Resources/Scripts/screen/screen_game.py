@@ -8,8 +8,17 @@ from view.person import Person
 class ScreenGameCallback(PyScreenCallback):
 
     def OnInit(self):
+
+        bg = View()
+        bg.SetSprite('Resources/Maps/level1/bg.png')
+        bg.SetHUD(True)
+        bg.SetSize(58.2, 30.4)
+        bg.SetPosition(0, 0, -5)
+        self.scr.AddView(bg)
+
+
         person = Person(self.scr)
-        person.SetPosition(-10, 3)
+        person.SetPosition(-37, 3)
         #self.scr.phy.SetPos(person, 0, 3)
         self.scr.AddView(person)
 

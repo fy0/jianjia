@@ -1,6 +1,7 @@
 
 # coding:utf-8
 
+import time
 import inspect
 
 def varName(var):
@@ -12,3 +13,6 @@ def varName(var):
 
 class _(object):
     pass
+
+def time_offset(t):
+    return time.time() - t

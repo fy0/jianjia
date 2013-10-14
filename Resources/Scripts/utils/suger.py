@@ -119,4 +119,10 @@ class ChipmunkWorld(flux.ChipmunkWorld):
             if ret: yield ret
             else: break
 
+    def ShapeQuery(self, shape):
+        while True:
+            ret = super(ChipmunkWorld, self).ShapeQuery(shape)
+            if ret: yield ret
+            else: break
+
 flux.ChipmunkWorld = ChipmunkWorld
