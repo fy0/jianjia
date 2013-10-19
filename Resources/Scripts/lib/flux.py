@@ -260,6 +260,7 @@ class World(_object):
     if _newclass:GetInstance = staticmethod(_flux.World_GetInstance)
     def SetSleep(self, *args): return _flux.World_SetSleep(self, *args)
     def SetPyCallBack(self, *args): return _flux.World_SetPyCallBack(self, *args)
+    def GetFPS(self): return _flux.World_GetFPS(self)
     def GetWindowWidth(self): return _flux.World_GetWindowWidth(self)
     def GetWindowHeight(self): return _flux.World_GetWindowHeight(self)
     def __init__(self): 
@@ -1013,6 +1014,7 @@ class ChipmunkWorld(BasePhysics):
     __del__ = lambda self : None;
     def SetGravity(self, *args): return _flux.ChipmunkWorld_SetGravity(self, *args)
     def Update(self, *args): return _flux.ChipmunkWorld_Update(self, *args)
+    def AddShape(self, *args): return _flux.ChipmunkWorld_AddShape(self, *args)
     def AddSyncShape(self, *args): return _flux.ChipmunkWorld_AddSyncShape(self, *args)
     def LinkView(self, *args): return _flux.ChipmunkWorld_LinkView(self, *args)
     def Add(self, *args): return _flux.ChipmunkWorld_Add(self, *args)

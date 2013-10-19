@@ -18,7 +18,8 @@ class ScreenGameCallback(PyScreenCallback):
 
 
         person = Person(self.scr)
-        person.SetPosition(-37, 3)
+        #person.SetPosition(-37, 3)
+        person.SetPosition(-22, 3)
         #self.scr.phy.SetPos(person, 0, 3)
         self.scr.AddView(person)
 

@@ -48,7 +48,6 @@ class Person(flux.View):
         self.scr = scr
         self.phy = scr.phy
 
-        #self.SetSize(6.5/2, 9.1/2)
         self.SetSize(7, 7)
 
         #self.SetSprite('Resources/Images/meizi.png', 3)
@@ -57,25 +56,28 @@ class Person(flux.View):
         self.AddFrameAnim('移动', 1,1)
         self.AddFrameAnim('攻击1', 3,3)
         self.AddFrameAnim('攻击2', 3,3)
-        #self.AddFrameAnim('right', 27, 22)
-        #self.AddFrameAnim('jumpl', 5, 8)
-        #self.AddFrameAnim('jumpr', 22, 19)
         self.SetFrame(0)
 
         offset = phy.cpv(0,-1)
-        #moment = phy.cpMomentForCircle(1.0, 2, 2, offset)
-        #body = phy.cpBodyNew(1.0, moment)
         body = phy.cpBodyNew(1.0, phy.INFINITY)
 
         shape = phy.cpCircleShapeNew(body, 1.5, offset)
         phydata = flux.PhyData(PhyIndex.CHARACTER, self, shape)
         phy.cpShapeSetUserData(shape, phydata)
 
+        offset = phy.cpv(0,0.5)
+        shape2 = phy.cpBoxShapeNew4(body, 3.4, 3, offset)
+        phydata2 = flux.PhyData(PhyIndex.CHARACTER_MAIN, self, shape2)
+        phy.cpShapeSetUserData(shape2, phydata2)
+
         self.shape = shape
+        self.shape2 = shape2
         self.body = body
         self.body.phydata = phydata
+        self.body.phydata2 = phydata2
 
         self.phy.LinkView(self,  body)
+        self.phy.AddShape(shape2)
         self.phy.AddSyncShape(shape)
 
     def SetPosition(self, x, y):
@@ -89,15 +91,19 @@ class Person(flux.View):
     touchlst_ground = dict()
 
     def CollisionBegin(self, data1, data2):
-        if self.GetID() == data1.v.GetID() and data2.index == PhyIndex.GROUND:
-            self.isJumping = 0
-            hashid = data2.shape.hashid_private
-            if not hashid in self.touchlst_ground:
-                self.touchlst_ground[hashid] = data2
-            self.ResetState()
+        if data2.index == PhyIndex.GROUND:
+            if data1.index == PhyIndex.CHARACTER:
+                self.isJumping = 0
+                hashid = data2.shape.hashid_private
+                if not hashid in self.touchlst_ground:
+                    self.touchlst_ground[hashid] = data2
+                self.ResetState()
+            elif data1.index == PhyIndex.CHARACTER_MAIN:
+                # 角色可以爬墙
+                self.isJumping = 0
 
     def CollisionEnd(self, data1, data2):
-        if self.GetID() == data1.v.GetID() and data2.index == PhyIndex.GROUND:
+        if data1.index == PhyIndex.CHARACTER and data2.index == PhyIndex.GROUND:
             hashid = data2.shape.hashid_private
             if hashid in self.touchlst_ground:
                 del self.touchlst_ground[hashid]
@@ -115,6 +121,7 @@ class Person(flux.View):
             elif key == flux.GLFW_KEY_SPACE:
                 self.AddAct(InputAct.JUMP)
             elif key == ord('Z'):
+                print theWorld.GetFPS()
                 self.AddAct(InputAct.ATTACK)
         elif action == flux.GLFW_RELEASE:
             if key == flux.GLFW_KEY_RIGHT:

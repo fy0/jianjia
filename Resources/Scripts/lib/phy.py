@@ -786,6 +786,131 @@ cpSegmentShapeGetNormal = _phy.cpSegmentShapeGetNormal
 def cpSegmentShapeGetRadius(*args):
   return _phy.cpSegmentShapeGetRadius(*args)
 cpSegmentShapeGetRadius = _phy.cpSegmentShapeGetRadius
+class cpSplittingPlane(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, cpSplittingPlane, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, cpSplittingPlane, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["n"] = _phy.cpSplittingPlane_n_set
+    __swig_getmethods__["n"] = _phy.cpSplittingPlane_n_get
+    if _newclass:n = _swig_property(_phy.cpSplittingPlane_n_get, _phy.cpSplittingPlane_n_set)
+    __swig_setmethods__["d"] = _phy.cpSplittingPlane_d_set
+    __swig_getmethods__["d"] = _phy.cpSplittingPlane_d_get
+    if _newclass:d = _swig_property(_phy.cpSplittingPlane_d_get, _phy.cpSplittingPlane_d_set)
+    def __init__(self): 
+        this = _phy.new_cpSplittingPlane()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _phy.delete_cpSplittingPlane
+    __del__ = lambda self : None;
+cpSplittingPlane_swigregister = _phy.cpSplittingPlane_swigregister
+cpSplittingPlane_swigregister(cpSplittingPlane)
+
+class cpPolyShape(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, cpPolyShape, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, cpPolyShape, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["shape"] = _phy.cpPolyShape_shape_set
+    __swig_getmethods__["shape"] = _phy.cpPolyShape_shape_get
+    if _newclass:shape = _swig_property(_phy.cpPolyShape_shape_get, _phy.cpPolyShape_shape_set)
+    __swig_setmethods__["numVerts"] = _phy.cpPolyShape_numVerts_set
+    __swig_getmethods__["numVerts"] = _phy.cpPolyShape_numVerts_get
+    if _newclass:numVerts = _swig_property(_phy.cpPolyShape_numVerts_get, _phy.cpPolyShape_numVerts_set)
+    __swig_setmethods__["verts"] = _phy.cpPolyShape_verts_set
+    __swig_getmethods__["verts"] = _phy.cpPolyShape_verts_get
+    if _newclass:verts = _swig_property(_phy.cpPolyShape_verts_get, _phy.cpPolyShape_verts_set)
+    __swig_setmethods__["tVerts"] = _phy.cpPolyShape_tVerts_set
+    __swig_getmethods__["tVerts"] = _phy.cpPolyShape_tVerts_get
+    if _newclass:tVerts = _swig_property(_phy.cpPolyShape_tVerts_get, _phy.cpPolyShape_tVerts_set)
+    __swig_setmethods__["planes"] = _phy.cpPolyShape_planes_set
+    __swig_getmethods__["planes"] = _phy.cpPolyShape_planes_get
+    if _newclass:planes = _swig_property(_phy.cpPolyShape_planes_get, _phy.cpPolyShape_planes_set)
+    __swig_setmethods__["tPlanes"] = _phy.cpPolyShape_tPlanes_set
+    __swig_getmethods__["tPlanes"] = _phy.cpPolyShape_tPlanes_get
+    if _newclass:tPlanes = _swig_property(_phy.cpPolyShape_tPlanes_get, _phy.cpPolyShape_tPlanes_set)
+    __swig_setmethods__["r"] = _phy.cpPolyShape_r_set
+    __swig_getmethods__["r"] = _phy.cpPolyShape_r_get
+    if _newclass:r = _swig_property(_phy.cpPolyShape_r_get, _phy.cpPolyShape_r_set)
+    def __init__(self): 
+        this = _phy.new_cpPolyShape()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _phy.delete_cpPolyShape
+    __del__ = lambda self : None;
+cpPolyShape_swigregister = _phy.cpPolyShape_swigregister
+cpPolyShape_swigregister(cpPolyShape)
+
+
+def cpPolyShapeAlloc():
+  return _phy.cpPolyShapeAlloc()
+cpPolyShapeAlloc = _phy.cpPolyShapeAlloc
+
+def cpPolyShapeInit(*args):
+  return _phy.cpPolyShapeInit(*args)
+cpPolyShapeInit = _phy.cpPolyShapeInit
+
+def cpPolyShapeInit2(*args):
+  return _phy.cpPolyShapeInit2(*args)
+cpPolyShapeInit2 = _phy.cpPolyShapeInit2
+
+def cpPolyShapeNew(*args):
+  return _phy.cpPolyShapeNew(*args)
+cpPolyShapeNew = _phy.cpPolyShapeNew
+
+def cpPolyShapeNew2(*args):
+  return _phy.cpPolyShapeNew2(*args)
+cpPolyShapeNew2 = _phy.cpPolyShapeNew2
+
+def cpBoxShapeInit(*args):
+  return _phy.cpBoxShapeInit(*args)
+cpBoxShapeInit = _phy.cpBoxShapeInit
+
+def cpBoxShapeInit2(*args):
+  return _phy.cpBoxShapeInit2(*args)
+cpBoxShapeInit2 = _phy.cpBoxShapeInit2
+
+def cpBoxShapeInit3(*args):
+  return _phy.cpBoxShapeInit3(*args)
+cpBoxShapeInit3 = _phy.cpBoxShapeInit3
+
+def cpBoxShapeNew(*args):
+  return _phy.cpBoxShapeNew(*args)
+cpBoxShapeNew = _phy.cpBoxShapeNew
+
+def cpBoxShapeNew2(*args):
+  return _phy.cpBoxShapeNew2(*args)
+cpBoxShapeNew2 = _phy.cpBoxShapeNew2
+
+def cpBoxShapeNew3(*args):
+  return _phy.cpBoxShapeNew3(*args)
+cpBoxShapeNew3 = _phy.cpBoxShapeNew3
+
+def cpPolyValidate(*args):
+  return _phy.cpPolyValidate(*args)
+cpPolyValidate = _phy.cpPolyValidate
+
+def cpPolyShapeGetNumVerts(*args):
+  return _phy.cpPolyShapeGetNumVerts(*args)
+cpPolyShapeGetNumVerts = _phy.cpPolyShapeGetNumVerts
+
+def cpPolyShapeGetVert(*args):
+  return _phy.cpPolyShapeGetVert(*args)
+cpPolyShapeGetVert = _phy.cpPolyShapeGetVert
+
+def cpPolyShapeGetRadius(*args):
+  return _phy.cpPolyShapeGetRadius(*args)
+cpPolyShapeGetRadius = _phy.cpPolyShapeGetRadius
+
+def cpBoxShapeInit4(*args):
+  return _phy.cpBoxShapeInit4(*args)
+cpBoxShapeInit4 = _phy.cpBoxShapeInit4
+
+def cpBoxShapeNew4(*args):
+  return _phy.cpBoxShapeNew4(*args)
+cpBoxShapeNew4 = _phy.cpBoxShapeNew4
 
 def cpSpaceAlloc():
   return _phy.cpSpaceAlloc()
