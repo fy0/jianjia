@@ -530,6 +530,9 @@ class cpShape(_object):
     __swig_setmethods__["layers"] = _phy.cpShape_layers_set
     __swig_getmethods__["layers"] = _phy.cpShape_layers_get
     if _newclass:layers = _swig_property(_phy.cpShape_layers_get, _phy.cpShape_layers_set)
+    __swig_setmethods__["hashid_private"] = _phy.cpShape_hashid_private_set
+    __swig_getmethods__["hashid_private"] = _phy.cpShape_hashid_private_get
+    if _newclass:hashid_private = _swig_property(_phy.cpShape_hashid_private_get, _phy.cpShape_hashid_private_set)
     def __init__(self): 
         this = _phy.new_cpShape()
         try: self.this.append(this)

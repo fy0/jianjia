@@ -6,29 +6,42 @@ import stackless
 from lib import flux
 from utils import phy, time_offset
 from utils.suger import *
+from collections import deque
 from utils.phy import PhyIndex, PhyGroup
+
+class InputAct(object):
+    MOVE        = 1
+    MOVE_CANCEL = 2
+    JUMP        = 3
+    ATTACK      = 4
 
 class Person(flux.View):
     ''' 这个类姑且定义为：可操作的单位 '''
 
+    # 物理body
     body = None
     # 人物速度
     speed = 8.0
-    # 是否在跳跃状态
-    isJumping = 0
-    # 用于标识当前人物向哪里走
-    steering_wheel = 0
-    _dir = 0
+
+    # 提前输入允许时间
+    lifetime = 0.2
+    # 行动列表
+    actlst = deque()
     # 行动缓冲
-    act_delay = 0
-    old_time = 0
+    delay = False
 
-    _task = None
-
-    def check_delay(self):
-        if time_offset(self.old_time) >= self.act_delay:
-            self.old_time = time.time()
-            return True
+    # 状态：向何方移动
+    steering_wheel = 0
+    # 状态：方向
+    direction = 0
+    # 状态：跳跃
+    isJumping = 0
+    # 状态：攻击
+    isAttacking = 0
+    # 状态：是否触地
+    @property
+    def isGrounding(self):
+        return not self.isJumping and len(self.touchlst_ground)
 
     def __init__(self, scr):
         super(Person, self).__init__()
@@ -37,14 +50,13 @@ class Person(flux.View):
 
         #self.SetSize(6.5/2, 9.1/2)
         self.SetSize(7, 7)
-        #self.SetSize(4.4, 5.28)
-        #self.SetSize(6.6, 7.92)
 
         #self.SetSprite('Resources/Images/meizi.png', 3)
         self.SetSprite('Resources/Images/out.png', 4)
-        self.AddFrameAnim('move', 1,1)
-        self.AddFrameAnim('attack1', 3,3)
-        self.AddFrameAnim('attack2', 3,3)
+        self.AddFrameAnim('站立', 0, 0)
+        self.AddFrameAnim('移动', 1,1)
+        self.AddFrameAnim('攻击1', 3,3)
+        self.AddFrameAnim('攻击2', 3,3)
         #self.AddFrameAnim('right', 27, 22)
         #self.AddFrameAnim('jumpl', 5, 8)
         #self.AddFrameAnim('jumpr', 22, 19)
@@ -54,9 +66,9 @@ class Person(flux.View):
         #moment = phy.cpMomentForCircle(1.0, 2, 2, offset)
         #body = phy.cpBodyNew(1.0, moment)
         body = phy.cpBodyNew(1.0, phy.INFINITY)
-        phydata = flux.PhyData(PhyIndex.CHARACTER, self)
 
         shape = phy.cpCircleShapeNew(body, 1.5, offset)
+        phydata = flux.PhyData(PhyIndex.CHARACTER, self, shape)
         phy.cpShapeSetUserData(shape, phydata)
 
         self.shape = shape
@@ -66,18 +78,6 @@ class Person(flux.View):
         self.phy.LinkView(self,  body)
         self.phy.AddSyncShape(shape)
 
-        fly = flux.View()
-        fly.SetAnchor(self)
-        fly.SetPosition(2.5, 2.0)
-        fly.SetSize(1.0, 1.0)
-        self.fly = fly
-        self.scr.AddView(fly)
-
-    def IsOnGround(self):
-        for i in self.phy.ShapeQuery(self.shape):
-            if flux.CastToPhyData(i.data) is None:
-                return True
-
     def SetPosition(self, x, y):
         self.phy.SetPos(self, x, y)
 
@@ -86,102 +86,256 @@ class Person(flux.View):
             self.body = self.phy.GetBody(self)
         return self.body
 
-    def Jump(self):
-        if self.isJumping < 3:
-            if self.isJumping > 0:
-                self.GetBody().v.y = 0
-            self.GetBody().v.y += 10
-            self.isJumping += 1
-            self.AnimCancel()
-
-    test = []
-
-    def Attack(self):
-        if not self.check_delay():
-            return
-        self.act_delay = 0.5
-
-        def do():
-            pos = self.GetPosition()
-            if self._dir == 0:
-                offset = -5
-            elif self._dir == 1:
-                offset = 5
-
-            for i in self.test:
-                if not i.GetAlpha():
-                    self.test.remove(i)
-
-            v  = flux.View()
-            v.SetSize(abs(offset), 0.1)
-            v.SetPosition(pos.x + offset /2, pos.y)
-            v.SetColor(1,0,0)
-            v.FadeOut(0.5).AnimDo()
-            self.test.append(v)
-            self.scr.AddView(v)
-
-            lst = []
-            for i in self.phy.SegmentQuery(phy.cpv(pos.x, pos.y), phy.cpv(pos.x+offset, pos.y), 2, 0):
-                lst.append(i)
-            print u'检测到 %d 个物体' % (len(lst)-1)
-
-            self.PlayFrame(0.5, 'attack1').AnimDo()
-            sleep(0.5)
-            self.ResetXSpeed()
-
-        self._task = stackless.tasklet(do)()
-        self._task.run()
-    
-    def ResetXSpeed(self):
-        if not self.isJumping and self.IsOnGround():
-            if self.steering_wheel == 0:
-                self.AnimCancel()
-                self.SetFrame(0)
-            else:
-                self.AnimCancel()
-                self.PlayFrame(1, 'move').Loop()
-
-        if self.steering_wheel > 0:
-            self._dir = 1
-            self.SetFlip(self._dir)
-            self.fly.AnimCancel()
-            self.fly.MoveTo(0.3, -2.5, 2.0).Loop()
-        elif self.steering_wheel < 0:
-            self._dir = 0
-            self.SetFlip(self._dir)
-            self.fly.AnimCancel()
-            self.fly.MoveTo(0.3, 2.5, 2.0).AnimDo()
-        self.GetBody().v.x = self.speed * self.steering_wheel
+    touchlst_ground = dict()
 
     def CollisionBegin(self, data1, data2):
-        if self.GetID() == data1.v.GetID() and not (data2 and (1 <= data2.index <= 4)):
+        if self.GetID() == data1.v.GetID() and data2.index == PhyIndex.GROUND:
             self.isJumping = 0
-            self.SetFrame(0)
-        self.ResetXSpeed()
+            hashid = data2.shape.hashid_private
+            if not hashid in self.touchlst_ground:
+                self.touchlst_ground[hashid] = data2
+            self.ResetState()
 
     def CollisionEnd(self, data1, data2):
-        if self.GetID() == data1.v.GetID() and not (data2 and (1 <= data2.index <= 4)):
-            self.AnimCancel()
-            self.SetFrame(2)
-        self.ResetXSpeed()
+        if self.GetID() == data1.v.GetID() and data2.index == PhyIndex.GROUND:
+            hashid = data2.shape.hashid_private
+            if hashid in self.touchlst_ground:
+                del self.touchlst_ground[hashid]
+            self.ResetState()
 
     def KeyInput(self, key, scancode, action, mods):
         
         if action == flux.GLFW_PRESS:
             if key == flux.GLFW_KEY_RIGHT:
                 self.steering_wheel += 1
-                self.ResetXSpeed()
+                self.AddAct(InputAct.MOVE)
             elif key == flux.GLFW_KEY_LEFT:
                 self.steering_wheel -= 1
-                self.ResetXSpeed()
+                self.AddAct(InputAct.MOVE)
             elif key == flux.GLFW_KEY_SPACE:
-                self.Jump()
+                self.AddAct(InputAct.JUMP)
             elif key == ord('Z'):
-                self.Attack()
+                self.AddAct(InputAct.ATTACK)
         elif action == flux.GLFW_RELEASE:
             if key == flux.GLFW_KEY_RIGHT:
                 self.steering_wheel -= 1
-                self.ResetXSpeed()
+                self.AddAct(InputAct.MOVE_CANCEL)
             elif key == flux.GLFW_KEY_LEFT:
                 self.steering_wheel += 1
-                self.ResetXSpeed()
+                self.AddAct(InputAct.MOVE_CANCEL)
+
+    def AddAct(self, act, param=None):
+        self.actlst.append([act, time.clock(), param])
+        self.DoAction()
+
+    def ResetState(self):
+        self.AnimCancel()
+        self.isAttacking = 0
+
+        if self.steering_wheel > 0:
+            self.direction = 1
+        elif self.steering_wheel < 0:
+            self.direction = 0
+
+        if self.isGrounding:
+            # 地面
+            if self.steering_wheel:
+                self.PlayFrame(1, '移动').Loop()
+            else:
+                self.PlayFrame(10, '站立').Loop()
+        else:
+            # 空中
+            self.SetFrame(2)
+        self.SetFlip(self.direction)
+        self.GetBody().v.x = self.speed * self.steering_wheel
+
+    def Jump(self):
+        ''' 跳跃。不要在此函数中设置角色动画。因为人物离地时会自然改变动画。 '''
+        if self.isJumping > 0:
+            self.GetBody().v.y = 0
+        self.GetBody().v.y += 10
+        self.isJumping += 1
+
+    test = []
+
+    def Attack1(self):
+        self.AnimCancel()
+        self.PlayFrame(1, '攻击1').Loop()
+        self.GetBody().v.x = 0
+        self.GetBody().v.y = 0
+
+        pos = self.GetPosition()
+        if self.direction == 0:
+            offset = -5
+        elif self.direction == 1:
+            offset = 5
+
+        for i in self.test:
+            if not i.GetAlpha():
+                self.test.remove(i)
+
+        v  = flux.View()
+        v.SetSize(abs(offset), 0.1)
+        v.SetPosition(pos.x + offset /2, pos.y)
+        v.SetColor(1,0,0)
+        v.FadeOut(0.5).AnimDo()
+        self.test.append(v)
+        self.scr.AddView(v)
+
+        lst = []
+        for i in self.phy.SegmentQuery(phy.cpv(pos.x, pos.y), phy.cpv(pos.x+offset, pos.y), 2, 0):
+            lst.append(i)
+        print u'检测到 %d 个物体' % (len(lst)-1)
+
+    def Attack2(self):
+        self.AnimCancel()
+        self.PlayFrame(1, '攻击2').Loop()
+        self.GetBody().v.x = 0
+        self.GetBody().v.y = 0
+
+        pos = self.GetPosition()
+        if self.direction == 0:
+            offset = -5
+        elif self.direction == 1:
+            offset = 5
+
+        for i in self.test:
+            if not i.GetAlpha():
+                self.test.remove(i)
+
+        v  = flux.View()
+        v.SetSize(abs(offset), 0.1)
+        v.SetPosition(pos.x + offset /2, pos.y)
+        v.SetColor(0,0,1)
+        v.FadeOut(0.5).AnimDo()
+        self.test.append(v)
+        self.scr.AddView(v)
+
+        lst = []
+        for i in self.phy.SegmentQuery(phy.cpv(pos.x, pos.y), phy.cpv(pos.x+offset, pos.y), 2, 0):
+            lst.append(i)
+        print u'检测到 %d 个物体' % (len(lst)-1)
+
+    def Attack3(self):
+        self.AnimCancel()
+        self.PlayFrame(1, '攻击1').Loop()
+        self.GetBody().v.x = 0
+        self.GetBody().v.y = 0
+
+        pos = self.GetPosition()
+        if self.direction == 0:
+            offset = -5
+        elif self.direction == 1:
+            offset = 5
+
+        for i in self.test:
+            if not i.GetAlpha():
+                self.test.remove(i)
+
+        v  = flux.View()
+        v.SetSize(abs(offset), 0.1)
+        v.SetPosition(pos.x + offset /2, pos.y)
+        v.SetColor(0,1,0)
+        v.FadeOut(0.5).AnimDo()
+        self.test.append(v)
+        self.scr.AddView(v)
+
+        lst = []
+        for i in self.phy.SegmentQuery(phy.cpv(pos.x, pos.y), phy.cpv(pos.x+offset, pos.y), 2, 0):
+            lst.append(i)
+        print u'检测到 %d 个物体' % (len(lst)-1)
+
+    def Attack4(self):
+        self.AnimCancel()
+        self.PlayFrame(1, '攻击1').Loop()
+        self.GetBody().v.x = 0
+        self.GetBody().v.y = 0
+
+        pos = self.GetPosition()
+        if self.direction == 0:
+            offset = -5
+        elif self.direction == 1:
+            offset = 5
+
+        for i in self.test:
+            if not i.GetAlpha():
+                self.test.remove(i)
+
+        v  = flux.View()
+        v.SetSize(abs(offset), 0.1)
+        v.SetPosition(pos.x + offset /2, pos.y)
+        v.SetColor(1,0,1)
+        v.FadeOut(0.5).AnimDo()
+        self.test.append(v)
+        self.scr.AddView(v)
+
+        lst = []
+        for i in self.phy.SegmentQuery(phy.cpv(pos.x, pos.y), phy.cpv(pos.x+offset, pos.y), 2, 0):
+            lst.append(i)
+        print u'检测到 %d 个物体' % (len(lst)-1)
+
+    def DoAction(self):
+        def do():
+            while self.actlst:
+                # 是否在阻塞？阻塞中直接返回
+                if self.delay:
+                    return False
+
+                # 是否超时？超时则丢弃
+                tnow = time.clock()
+                act, tact, param = self.actlst.popleft()
+                if tnow - tact > self.lifetime:
+                    continue
+
+                if act == InputAct.MOVE:
+                    self.ResetState()
+                elif act == InputAct.MOVE_CANCEL:
+                    if not self.isAttacking:
+                        self.ResetState()
+                elif act == InputAct.JUMP:
+                    # 跳跃
+                    if self.isJumping < 3 and not self.isAttacking:
+                        self.Jump()
+                elif act == InputAct.ATTACK:
+                    if self.isGrounding:
+                        # 地面
+                        self.delay = True
+                        if self.isAttacking == 0:
+                            self.isAttacking = 1
+                            self.Attack1()
+                            sleep(0.3)
+                            self.delay = False
+                        elif self.isAttacking == 1:
+                            self.isAttacking = 2
+                            self.Attack2()
+                            sleep(0.3)
+                            self.delay = False
+                            sleep(0.3)
+                            if self.isAttacking == 2:
+                                self.isAttacking = 3
+                        # 第三下攻击
+                        elif self.isAttacking == 2:
+                            self.isAttacking = 4
+                            self.Attack3()
+                            sleep(0.3)
+                            self.isAttacking = 0
+                            self.ResetState()
+                            self.delay = False
+                        # 延时后的第三下攻击
+                        elif self.isAttacking == 3:
+                            self.isAttacking = 5
+                            self.Attack4()
+                            sleep(0.3)
+                            self.delay = False
+                            self.isAttacking = 0
+                            self.ResetState()
+                    else:
+                        # 空中
+                        if self.isAttacking == 0:
+                            pass
+                        elif self.isAttacking == 1:
+                            pass
+                        elif self.isAttacking == 2:
+                            pass
+
+        stackless.tasklet(do)().run()

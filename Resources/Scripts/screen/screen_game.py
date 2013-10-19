@@ -49,13 +49,16 @@ class ScreenGameCallback(PyScreenCallback):
         pass
 
     def KeyInput(self, key, scancode, action, mods):
+        #self.scr.personinput.KeyInput(key, scancode, action, mods)
         self.scr['person'].KeyInput(key, scancode, action, mods)
 
 class PhysicsCallback(PyChipmunkCallback):
     def CollisionBegin(self, data1, data2):
+        #self.scr.personinput.CollisionBegin(data1, data2)
         self.scr['person'].CollisionBegin(data1, data2)
         
     def CollisionEnd(self, data1, data2):
+        #self.scr.personinput.CollisionEnd(data1, data2)
         self.scr['person'].CollisionEnd(data1, data2)
 
     def UpdateVelocity(self, body, gravity, damping, dt):

@@ -920,16 +920,21 @@ class TmxMap(View):
 TmxMap_swigregister = _flux.TmxMap_swigregister
 TmxMap_swigregister(TmxMap)
 
-class PhyData(_object):
+class PhyData(Object):
     __swig_setmethods__ = {}
+    for _s in [Object]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, PhyData, name, value)
     __swig_getmethods__ = {}
+    for _s in [Object]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, PhyData, name)
     __repr__ = _swig_repr
     def __init__(self, *args): 
         this = _flux.new_PhyData(*args)
         try: self.this.append(this)
         except: self.this = this
+    __swig_setmethods__["shape"] = _flux.PhyData_shape_set
+    __swig_getmethods__["shape"] = _flux.PhyData_shape_get
+    if _newclass:shape = _swig_property(_flux.PhyData_shape_get, _flux.PhyData_shape_set)
     __swig_setmethods__["index"] = _flux.PhyData_index_set
     __swig_getmethods__["index"] = _flux.PhyData_index_get
     if _newclass:index = _swig_property(_flux.PhyData_index_get, _flux.PhyData_index_set)
